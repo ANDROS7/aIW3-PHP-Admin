@@ -10,3 +10,4 @@ ToDo's
 - **code readability**
 - nodejs implementation
 - proper config file
+- using **SteamID** instead of the default **XUID**
