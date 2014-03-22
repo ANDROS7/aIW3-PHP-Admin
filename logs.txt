@@ -1,0 +1,16 @@
+C:\Users\Administrator\Desktop\RepZ Client\m2demo\fame.log,28003,RepZ Famous Maps
+C:\Users\Administrator\Desktop\RepZ Client\m2demo\m40a3.log,27980,RepZ M40A3
+C:\Users\Administrator\Desktop\RepZ Client\m2demo\tdm1.log,27981,RepZ TDM1
+C:\Users\Administrator\Desktop\RepZ Client\m2demo\tdm2.log,27982,RepZ TDM2
+C:\Users\Administrator\Desktop\RepZ Client\m2demo\tdm3.log,27983,RepZ TDM3
+C:\Users\Administrator\Desktop\RepZ Client\m2demo\burgertown.log,27984,RepZ Burgertown
+C:\Users\Administrator\Desktop\RepZ Client\m2demo\terminal.log,27985,RepZ Terminal
+C:\Users\Administrator\Desktop\RepZ Client\m2demo\skidrow.log,27990,RepZ Skidrow
+C:\Users\Administrator\Desktop\RepZ Client\m2demo\highrise.log,27986,RepZ Highrise
+C:\Users\Administrator\Desktop\RepZ Client\m2demo\rust.log,27991,RepZ Rust
+C:\Users\Administrator\Desktop\RepZ Client\m2demo\hchighrise.log,27992,RepZ HCHighrise
+C:\Users\Administrator\Desktop\RepZ Client\m2demo\hcskidrow.log,27993,RepZ HCSkidrow
+C:\Users\Administrator\Desktop\RepZ Client\m2demo\hcterminal.log,27994,RepZ HCTerminal
+C:\Users\Administrator\Desktop\RepZ Client\m2demo\isnipe.log,27998,RepZ iSnipe
+C:\Users\Administrator\Desktop\RepZ aIZombie\m2demo\aizombie.log,27999,RepZ aiZombie
+C:\Users\Administrator\Desktop\RepZ RSE\m2demo\fiesta.log,28000,RSE
