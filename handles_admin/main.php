@@ -1,252 +1,52 @@
 <?php
     define("FILE_DIR", str_replace( "handles_admin", "", dirname( __FILE__ ) ));
+    require_once(FILE_DIR."/classes/functions.php");
     require_once(FILE_DIR."/classes/rcon.class.php");
     
-	class Colors
-	{
-		private $foreground_colors = array( );
-		private $background_colors = array( );
-		public function __construct( )
-		{
-			$this->foreground_colors[ 'black' ]        = '0;30';
-			$this->foreground_colors[ 'dark_gray' ]    = '1;30';
-			$this->foreground_colors[ 'blue' ]         = '0;34';
-			$this->foreground_colors[ 'light_blue' ]   = '1;34';
-			$this->foreground_colors[ 'green' ]        = '0;32';
-			$this->foreground_colors[ 'light_green' ]  = '1;32';
-			$this->foreground_colors[ 'cyan' ]         = '0;36';
-			$this->foreground_colors[ 'light_cyan' ]   = '1;36';
-			$this->foreground_colors[ 'red' ]          = '0;31';
-			$this->foreground_colors[ 'light_red' ]    = '1;31';
-			$this->foreground_colors[ 'purple' ]       = '0;35';
-			$this->foreground_colors[ 'light_purple' ] = '1;35';
-			$this->foreground_colors[ 'brown' ]        = '0;33';
-			$this->foreground_colors[ 'yellow' ]       = '1;33';
-			$this->foreground_colors[ 'light_gray' ]   = '0;37';
-			$this->foreground_colors[ 'white' ]        = '1;37';
-			$this->background_colors[ 'black' ]        = '40';
-			$this->background_colors[ 'red' ]          = '41';
-			$this->background_colors[ 'green' ]        = '42';
-			$this->background_colors[ 'yellow' ]       = '43';
-			$this->background_colors[ 'blue' ]         = '44';
-			$this->background_colors[ 'magenta' ]      = '45';
-			$this->background_colors[ 'cyan' ]         = '46';
-			$this->background_colors[ 'light_gray' ]   = '47';
-		}
-		public function getColoredString( $string, $foreground_color = null, $background_color = null )
-		{
-			$colored_string = "";
-			if ( isset( $this->foreground_colors[ $foreground_color ] ) ) {
-				$colored_string .= "\033[" . $this->foreground_colors[ $foreground_color ] . "m";
-			} //isset( $this->foreground_colors[ $foreground_color ] )
-			if ( isset( $this->background_colors[ $background_color ] ) ) {
-				$colored_string .= "\033[" . $this->background_colors[ $background_color ] . "m";
-			} //isset( $this->background_colors[ $background_color ] )
-			$colored_string .= $string . "\033[0m";
-			return $colored_string;
-		}
-		public function getForegroundColors( )
-		{
-			return array_keys( $this->foreground_colors );
-		}
-		public function getBackgroundColors( )
-		{
-			return array_keys( $this->background_colors );
-		}
-	}
-	function push( $header, $message, $priority = 0 )
-	{
-		$fields = array(
-			 'apikey' => urlencode( "50d69727b39076ccf70475af70e1f9780b9c598c" ),
-			'application' => urlencode( "aIW3 Bot" ),
-			'event' => urlencode( $header ),
-			'priority' => $priority,
-			'description' => urlencode( $message ) 
-		);
-		foreach ( $fields as $key => $value ) {
-			$fields_string .= $key . '=' . $value . '&';
-		} //$fields as $key => $value
-		rtrim( $fields_string, '&' );
-		$ch = curl_init();
-		curl_setopt( $ch, CURLOPT_URL, "http://api.prowlapp.com/publicapi/add" );
-		curl_setopt( $ch, CURLOPT_POST, count( $fields ) );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $fields_string );
-		$result = curl_exec( $ch );
-		curl_close( $ch );
-		$fields        = array(
-			 "token" => "ubDHRfDBcBALCBbqjtKfZ5p1MCYoC5",
-			"user" => "a3GnedbRnzHY3Ldgr8gjrphMJZ2Dp4",
-			"title" => urlencode( $header ),
-			"message" => urlencode( $message ) 
-		);
-		$fields_string = "";
-		foreach ( $fields as $key => $value ) {
-			$fields_string .= $key . '=' . $value . '&';
-		} //$fields as $key => $value
-		rtrim( $fields_string, '&' );
-		$ch = curl_init();
-		curl_setopt( $ch, CURLOPT_URL, "https://api.pushover.net/1/messages.json" );
-		curl_setopt( $ch, CURLOPT_POST, count( $fields ) );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $fields_string );
-		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, 0 );
-		curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, 0 );
-		$result = curl_exec( $ch );
-		curl_close( $ch );
-	}
-	function diff_time( $differenz, $time = "" )
-	{
-		if ( $differenz == NULL || empty( $differenz ) || is_null( $differenz ) )
-			return " never ";
-		if ( $time == "" )
-			$time = time();
-		$r         = "";
-		$differenz = $time - $differenz;
-		$tag       = floor( $differenz / ( 3600 * 24 ) );
-		$std       = floor( $differenz / 3600 % 24 );
-		$min       = floor( $differenz / 60 % 60 );
-		$sek       = floor( $differenz % 60 );
-		if ( $tag != 0 ) {
-			return $tag . " day" . ( $tag != "1" ? "s" : "" ) . " ago ";
-		} //$tag != 0
-		if ( $std != 0 ) {
-			return $std . " hour" . ( $std != "1" ? "s" : "" ) . " ago ";
-		} //$std != 0
-		if ( $min != 0 ) {
-			return $min . " min" . ( $min != "1" ? "s" : "" ) . " ago ";
-		} //$min != 0
-		if ( $sek != 0 ) {
-			return $sek . " sec" . ( $sek != "1" ? "s" : "" ) . " ago ";
-		} //$sek != 0
-	}
-	function is_integer2( $v )
-	{
-		$i = intval( $v );
-		if ( "$i" == "$v" ) {
-			return TRUE;
-		} //"$i" == "$v"
-		else {
-			return FALSE;
-		}
-	}
-	function update_logs( )
-	{
-		global $logs;
-		$logs = array( );
-        mysql_query("DELETE FROM servers");
-		$h    = fopen( FILE_DIR . "logs.txt", "c+" );
-		@$l    = fread( $h, filesize( FILE_DIR . "logs.txt" ) );
-		fclose( $h );
-        $la = array();
-        @$la = explode( "\n", $l );
-        foreach ( $la as $log ) {
-            $log               = explode( ",", $log );
-            ///var_dump($log);
-            if(count($log) == 3) {
-                mysql_query("INSERT INTO servers (port, log, name) VALUES ('".mysql_real_escape_String($log[1])."', '".mysql_real_escape_String($log[0])."', '".trim($log[2])."')");
-                if(mysql_error()) {
-                    echo mysql_error().PHP_EOL;
-                }   
-                $logs[ $log[ 1 ] ] = array("server" => trim($log[ 2 ]),
-                                            "log" => $log[0]);
-            } else {
-                echo "Could'nt attach logfile ".$log[0].PHP_EOL;
-            }
-        } //$l as $log
-        //var_dump($logs);
-        
-        foreach ( $logs as $log ) {
-            if ( !str_contains( $log["log"], "console_mp" ) ) {
-                if ( server( $log["server"] ) != NULL ) {
-                    $servers[ $log["server"] ] = TRUE;
-                } //server( str_replace( ".log", "", basename( $log ) ) ) != NULL
-            } //!str_contains( $log, "console_mp" )
-        } //$logs as $log
-	}
-	function server( $name )
-	{
-        global $logs;
-		foreach ( $logs as $port => $log ) {
-			if ( strstr( $log["server"], $name ) ) {
-				return $port;
-				break;
-			} //strstr( $log, $name )
-		} //$logs as $port => $log
-		return NULL;
-	}
-	function rcon_command( $cmd, $port = "", $pausebetween = "150000" )
-	{
-		global $server;
-		if ( $port == "" ) {
-			$port = server( $server );
-		} //$port == ""
-		$server_addr       = "udp://5.199.133.184";
-		$server_rconpass   = "myRconPassword";
-		$server_timeout    = "1";
-		$server_buffer_cur = 32768;
-		$connect           = @fsockopen( $server_addr, $port, $re, $errstr, $server_timeout );
-		if ( !$connect ) {
-			echo ( "connection error" ).PHP_EOL;
-			return;
-		} //!$connect
-		@socket_set_timeout( $connect, $server_timeout );
-		$send = "\xff\xff\xff\xff" . 'rcon "' . $server_rconpass . '" ' . $cmd;
-		fwrite( $connect, $send );
-		if ( $server_buffer_cur < 64 ) {
-			$server_buffer_cur = 32768;
-		} //$server_buffer_cur < 64
-		$output = '';
-		$t      = time();
-		do {
-			usleep( 5000 );
-			$buf = @fread( $connect, $server_buffer_cur );
-			$output .= $buf;
-			if ( strpos( $buf, "\x0A\x00" ) !== false ) {
-				break;
-			} //strpos( $buf, "\x0A\x00" ) !== false
-		} while ( time() - $t < $server_timeout );
-		$t = strpos( $output, "\x0A\x00" );
-		if ( $t !== false ) {
-			$output = substr( $output, 0, $t );
-		} //$t !== false
-		usleep( $pausebetween );
-		return $output;
-	}
-	function strposa( $haystack, $needles = array( ), $offset = 0 )
-	{
-		$chr = array( );
-		foreach ( $needles as $needle ) {
-			$res = strpos( $haystack, $needle, $offset );
-			if ( $res !== false )
-				$chr[ $needle ] = $res;
-		} //$needles as $needle
-		if ( empty( $chr ) )
-			return false;
-		return min( $chr );
-	}
-	function str_contains( $haystack, $needle, $ignoreCase = false )
-	{
-		if ( $ignoreCase ) {
-			$haystack = strtolower( $haystack );
-			$needle   = strtolower( $needle );
-		} //$ignoreCase
-		$needlePos = strpos( $haystack, $needle );
-		return ( $needlePos === false ? false : ( $needlePos + 1 ) );
-	}
-	function in_string( $needle, $haystack, $insensitive = false )
-	{
-		if ( $insensitive ) {
-			return false !== stristr( $haystack, $needle );
-		} //$insensitive
-		else {
-			return false !== strpos( $haystack, $needle );
-		}
-	}
-	set_time_limit( 0 );
-	mysql_connect( "127.0.0.1", "root", "" );
-	mysql_select_db( "aiw_admin" );
-	ini_set( "display_errors", 1 );
-	ini_set( 'memory_limit', '1G' );
-	error_reporting( E_ALL ^ E_NOTICE );
+    //** Command prompt colors - maybe remove that later, only support in *nix **//
+    require_once(FILE_DIR."/classes/colors.class.php");
+    $colors = new colors();
+    //**                                                                       **//
+    
+    require_once(FILE_DIR."/classes/Config/Lite.php");
+    $config = new Config_Lite(FILE_DIR."/settings.conf", LOCK_EX);
+    
+    if(!file_exists(FILE_DIR."/settings.conf")) {
+        if(!$config->hasSection("main")) {
+            $config->setSection("main", array(  "rcon_host_ip" => "127.0.0.1",
+                                                "rcon_password" => "miawesomrc0n",
+                                                "votekick"  => "no",
+                                                "votemap"  => "no",
+                                                "votegametype"  => "no",
+                                                "ooc" => "no"));
+            echo "created default Configration".PHP_EOL;
+        }
+        if(!$config->hasSection("mysql")) {
+            $config->setSection("mysql", array( "host"      => "localhost",
+                                                "username"  => "root",
+                                                "password"  => "password",
+                                                "database"  => "database"));
+            echo "created default MySQL-Section".PHP_EOL;
+        }
+        if(!$config->hasSection("server_1")) {
+            $config->setSection("server_1", array("logfile" => "path_to_log1.log", "port" => 0, "alias" => "Server name"));
+            echo "created default Server 1".PHP_EOL;
+        }
+        if(!$config->hasSection("server_2")) {
+            $config->setSection("server_2", array("logfile" => "path_to_log2.log", "port" => 0, "alias" => "Server name"));
+            echo "created default Server 2".PHP_EOL;
+        }
+        $config->save();
+        exit("Created default configuration. Please edit the configuration for your needs. (settings.conf)").PHP_EOL;
+    } else {
+        require_once(FILE_DIR."/classes/mysql.php"); // establish a connection after default values are there
+    }
+    
+    if(empty($logs)) {
+        echo "No servers available.. aborting start".PHP_EOL;
+        exit();
+    }
+    
 	$colors      = new colors();
 	$willichnich = array(
 		 "ShutdownGame:",
@@ -328,13 +128,17 @@ so_ghillies-Pripyat";
 		"Vote a Map change with ^4!votemap" 
 	);
 	update_logs();
-        foreach ( $logs as $log ) {
-            if ( !str_contains( $log["log"], "console_mp" ) ) {
-                $h = fopen( $log["log"], "w" );
-                ftruncate( $h, 0 );
-                fclose( $h );
-            } //!str_contains( $log, "console_mp" )
-        } //$logs as $log
+    
+    // ** empty all log files before continuing ** //
+    foreach ( $logs as $log ) {
+        if ( !str_contains( $log["log"], "console_mp" ) ) {
+            $h = fopen( $log["log"], "w" );
+            ftruncate( $h, 0 );
+            fclose( $h );
+        } //!str_contains( $log, "console_mp" )
+    } //$logs as $log
+    // **                                        ** //
+    
 	while ( true ) {
 		foreach ( $logs as $log ) {
 			if ( strpos( $log["log"], "console_mp" ) !== FALSE || filesize( $log["log"] ) <= 0 ) {
