@@ -1,6 +1,7 @@
 <?php
     define("FILE_DIR", str_replace( "handles_admin", "", dirname( __FILE__ ) ));
-
+    require_once(FILE_DIR."/classes/rcon.class.php");
+    
 	class Colors
 	{
 		private $foreground_colors = array( );

@@ -6,24 +6,6 @@
 			mysql_unbuffered_query( "DELETE FROM playerlist WHERE server = '" . $server . "'" );
 		} //count( $players[ $server ] ) > 18
         
-        if($getips <= (time() - 30)) {
-            foreach($players as $serverr => $tmp) {
-                /**
-                if(empty($tmp)) {
-                    continue;
-                }
-                if($q = new q3rcon("5.199.133.184", server($serverr), "myRconPassword")) {
-                    echo "success".PHP_EOL;
-                    $pls = $q->get_players();
-                    var_dump($pls);
-                    $q->close();
-                }
-                **/
-            }
-            unset($tmp, $serverr);
-            $getips = time();
-        }
-        
 		if ( $fetchmysql <= ( time() - 60 ) ) {
             update_logs();
 			echo $colors->getColoredString( "------------------------------- SAVING DATA -------------------------------", "black", "red" ) . PHP_EOL;
