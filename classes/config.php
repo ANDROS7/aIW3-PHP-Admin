@@ -10,7 +10,7 @@ $config = new Config_Lite("../config.ini", LOCK_EX);
 
 function getConfigValue($section, $key)
 {
-	if(is_null($section)
+	if(is_null($section)) // missing ) :)
 	{
 		return $config[$key];
 	}
@@ -24,7 +24,7 @@ function setConfigValue($section, $key, $value)
 	}
 	else
 	{
-		$config[$section] = array($key => $value;
+		$config[$section] = array($key => $value); // again a missing ) :)
 	}
 	$config->save();
 }
