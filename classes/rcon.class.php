@@ -21,7 +21,7 @@
          // Open up the connection wih the given address and port
          $this->socket_connection   = fsockopen( "udp://" . $this->address, $this->port, $this->last_socket_err_num, $this->last_socket_err_str, $timeout );
          if ( !$this->socket_connection ) {
-             echo "Could not connect with given ip:port\n<br>errno: $this->last_socket_err_num\n<br>errstr: $this->last_socket_err_str";
+             echo "Could not connect with given ip:port\n<br>errno: $this->last_socket_err_num\n<br>errstr: $this->last_socket_err_str".PHP_EOL;
              return false;
          } //!$this->socket_connection
      }
